@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<!-- <link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css"> -->
+	<link rel="stylesheet" href="../css/custom.css">
+	<link rel="stylesheet" href="../css/normalize.css">
+
+	<title></title>
+	<style>
+		* {
+			font-family: Verdana !important;
+		}
+	</style>
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h1 style="font-family: Verdana;"><b>Expressiveness, Emotion and in-the-wild Scenarios for Voice Conversion with NaturalVoices Dataset</b></h1>
+	<h5>Zongyang Du<sup>1,2</sup>, Shreeram Suresh Chandra<sup>1,2</sup>, Ali N. Salmanu<sup>1</sup>, <h5>Ismail Rasim Ulgen<sup>2</sup>, Carlos Busso<sup>3</sup>, Berrak Sisman<sup>2</sup></h5>
+	<h5><sup>1</sup>University of Texas at Dallas, <sup>2</sup>Johns Hopkins University, <sup>3</sup>Carnegie Mellon University</h5>	
+		<h5 style="font-family: Verdana;"><a href="paper link">[Paper on ArXiv]</a>
+			
+		</h5>
+       
+	</div>
+	<!--p>
+        <h4 style="font-family: Verdana;"><b>Abstract</b> <br></h4>
+		Natural speech is spontaneous and expressive, encompassing various speaking styles and occurring in diverse environments with varying background noises. 
+		Voice conversion (VC) aims to transform one speaker's voice to sound like a target speaker while preserving linguistic content. 
+		However, most VC frameworks are trained on scripted corpora recorded in controlled settings, limiting their expressiveness to real-life speech. 
+		An ideal VC dataset should capture the richness, complexity, and expressiveness of natural human speech to meet the demands of novel VC tasks. 
+		To address this need, we introduced NaturalVoices, a large-scale dataset of spontaneous, expressive, and emotional speech sourced from in-the-wild podcast recordings, accompanied by an automatic annotation pipeline that provides detailed metadata. 
+		In this work, we present an enhanced version of NaturalVoices, now expanded to <b>3,950</b> hours with higher-quality, original sampling rate recordings, licensing information, and additional speech quality metrics. 
+		We perform extensive evaluations of VC models across diverse settings, particularly focusing on emotional and expressive speech, demonstrating the dataset’s versatility and potential for a wide range of VC and speech synthesis tasks. 
+		Our contributions provide a valuable resource for advancing VC research towards more natural and expressive synthetic speech.
+    </p -->
+
+		<br>
+		<h6>Demo for Voice Conversion Experiments:  <a href="Voice conversion demo">Here</a></h6>
+		
+		
+		<h6>Dataset Release: <a href="https://github.com/3loi/NaturalVoices">Here</a></h6>
+		
+		<br>
+
+
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">		
+    <h2 id="NaturalVoices" style="text-align: center;">The NaturalVoices Dataset</h2>
+    <h3 style="font-family: Verdana;"><b>Overview</b> <br></h3>
+
+    <p>
+        The NaturalVoices dataset is a <b>large-scale</b> collection of 3,817 hours of podcast speech from 6,929 episodes, featuring rich, expressive, emotional, and spontaneous in-the-wild speech. 
+        Our multi-module processing pipeline extracts comprehensive annotations, including speaker information, speech quality, transcripts, and emotion labels, providing valuable resources for speech processing.
+        The following is an overview of our dataset based on some aspects provided by our pipeline. For other information like speech quality, emotion attributes, please check our paper.
+    </p>
+
+    <!-- 使用 Flexbox 让表格并排 -->
+    <div class="table-container">
+        
+        <!-- Basic Information -->
+        <table class="info-table">
+            <thead>
+                <tr><th>Basic Information</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Podcasts: 6,929 episodes</td></tr>
+                <tr><td>Total hours: 4,000 hours</td></tr>
+                <tr><td>Utterances: xxx (number)</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Speaker Information -->
+        <table class="info-table">
+            <thead>
+                <tr><th>Speaker</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Male: xx hours</td></tr>
+                <tr><td>Female: xx hours</td></tr>
+                <tr><td>Single Speaker Utterance: xx hours</td></tr>
+                <tr><td>Speakers with Global Label: xx</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Emotion Categories Information -->
+        <table class="info-table">
+            <thead>
+                <tr><th>Emotion Category</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Neutral: xx hours</td></tr>
+                <tr><td>Happy: xx hours</td></tr>
+                <tr><td>Sad: xx hours</td></tr>
+                <tr><td>Angry: xx hours</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Sound Event Information -->
+        <table class="info-table">
+            <thead>
+                <tr><th>Sound Event</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Total Categories: xx</td></tr>
+                <tr><td>Speech: xx hours</td></tr>
+                <tr><td>Other: xx hours</td></tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- CSS 让表格并排 -->
+<style>
+    /* Flexbox 让表格并排 */
+    .table-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    /* 让所有表格均分空间 */
+    .info-table {
+        width: 23%; /* 确保四个表格均分一行 */
+        min-width: 280px; /* 确保最小宽度，防止太小 */
+        border-collapse: collapse;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 表头样式 */
+    .info-table th {
+        background-color: #dee2e6;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* 表格内容样式 */
+    .info-table td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* 移除最后一行的底部边框 */
+    .info-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* 让表格在小屏幕上自动换行 */
+    @media (max-width: 800px) {
+        .table-container {
+            flex-direction: column;
+            align-items: center;
+        }
+        .info-table {
+            width: 90%; /* 让表格在小屏幕时占满 */
+        }
+    }
+</style>
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">		
+	<h2 id="Organization" style="text-align: center;">Organization</h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="../Schematic_new.png" height="500" width="1000">
+		<!-- <iframe src="../overview_architecture.pdf" width="500" height="600"></iframe> -->
+	</p>
+	</body>
+
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">		
+    <h2 id="Pipeline-overview" style="text-align: center;">Pipeline Overview</h2>
+    
+    <p style="text-align: center;">
+        <img src="../overview_redraw.png" height="650" width="1200">
+    </p>
+
+    <p>
+        The overview of our pipeline processing our podcast audio. It contains four steps: Data collection; Document-level annotation; Segment-level annotation; and filtering and extraction.
+    </p>
+    
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">		
+    <h2 id="Examples" style="text-align: center;">Example: Pipeline Annotation Result for Audio Segment</h2>
+
+
+    <!-- 音频 + 按钮 + annotation 容器 --> 
+<div class="audio-container">
+        <!-- 音频文件名 -->
+        <span class="audio-title">MSP-PODCAST_0009_436.flac</span>
+    
+        <!-- 音频播放器 -->
+        <audio controls class="audio-player">
+            <source src="your_audio_file.wav" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+
+     <!-- Annotation 按钮 -->
+     <button id="annotation-btn" class="annotation-btn">Show Annotation</button>
+
+    <!-- Annotation 显示区域（默认隐藏） -->
+    <pre id="annotation-box" class="annotation-box" style="display: none;">
+        "436": {
+            "license": "cc-by-sa",
+            "start": 1876.26,
+            "end": 1879.36,
+            "speech_classification": "Speech",
+            "text": "So thank you, John, for calling and offering that question.",
+            
+            "NUM_SPKS": 1,
+            "gender": "Female",
+            "age_gender": {
+                "Age": 31.5,
+                "Female": 0.9900000095367432,
+                "Male": 0.009999999776482582,
+                "Child": 0.0
+            },
+            "speakers": [
+                [
+                    "SPEAKER_00"
+                ],
+                " 0.0  3.2 SPEAKER_00\n"
+            ],
+            "global speaker": {
+                "speaker label": "26",
+                "method": "mapping"
+            }
+
+            "SNR": 23.329906628579444,
+            "PESQ": 4.043514251708984,
+            "STOI": 0.9949520826339722,
+            "SI_SDR": 28.37453842163086,
+            "MOS": 4.020342826843262,
+            "ASR_CONF": 0.8318172115010677,
+            "DNSMOSPro": {
+                "BVCC": [
+                    2.151841402053833,
+                    0.4240565896034241
+                ],
+                "NISQA": [
+                    4.024730682373047,
+                    0.27187132835388184
+                ],
+                "VCC_2018": [
+                    3.339622735977173,
+                    0.43723881244659424
+                ]
+            },
+
+            "Arousal": 0.7490819692611694,
+            "Dominance": 0.7499462366104126,
+            "Valence": 0.8421176671981812,
+
+            "Neutral": 0.08471498638391495,
+            "Angry": 0.0006307809962891042,
+            "Sad": 0.008640062995254993,
+            "Happy": 0.9060142040252686,     
+        },
+    </pre>
+</div>
+
+<div class="audio-container">
+    <!-- 音频文件名 -->
+    <span class="audio-title">MSP-PODCAST_0009_436.flac</span>
+
+    <!-- 音频播放器 -->
+    <audio controls class="audio-player">
+        <source src="your_audio_file.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+ <!-- Annotation 按钮 -->
+ <button id="annotation-btn" class="annotation-btn">Show Annotation</button>
+
+<!-- Annotation 显示区域（默认隐藏） -->
+<pre id="annotation-box" class="annotation-box" style="display: none;">
+    "436": {
+        "license": "cc-by-sa",
+        "start": 1876.26,
+        "end": 1879.36,
+        "speech_classification": "Speech",
+        "text": "So thank you, John, for calling and offering that question.",
+        
+        "NUM_SPKS": 1,
+        "gender": "Female",
+        "age_gender": {
+            "Age": 31.5,
+            "Female": 0.9900000095367432,
+            "Male": 0.009999999776482582,
+            "Child": 0.0
+        },
+        "speakers": [
+            [
+                "SPEAKER_00"
+            ],
+            " 0.0  3.2 SPEAKER_00\n"
+        ],
+        "global speaker": {
+            "speaker label": "26",
+            "method": "mapping"
+        }
+
+        "SNR": 23.329906628579444,
+        "PESQ": 4.043514251708984,
+        "STOI": 0.9949520826339722,
+        "SI_SDR": 28.37453842163086,
+        "MOS": 4.020342826843262,
+        "ASR_CONF": 0.8318172115010677,
+        "DNSMOSPro": {
+            "BVCC": [
+                2.151841402053833,
+                0.4240565896034241
+            ],
+            "NISQA": [
+                4.024730682373047,
+                0.27187132835388184
+            ],
+            "VCC_2018": [
+                3.339622735977173,
+                0.43723881244659424
+            ]
+        },
+
+        "Arousal": 0.7490819692611694,
+        "Dominance": 0.7499462366104126,
+        "Valence": 0.8421176671981812,
+
+        "Neutral": 0.08471498638391495,
+        "Angry": 0.0006307809962891042,
+        "Sad": 0.008640062995254993,
+        "Happy": 0.9060142040252686,     
+    },
+</pre>
+</div>
+
+<div class="audio-container">
+    <!-- 音频文件名 -->
+    <span class="audio-title">MSP-PODCAST_0009_436.flac</span>
+
+    <!-- 音频播放器 -->
+    <audio controls class="audio-player">
+        <source src="your_audio_file.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+ <!-- Annotation 按钮 -->
+ <button id="annotation-btn" class="annotation-btn">Show Annotation</button>
+
+<!-- Annotation 显示区域（默认隐藏） -->
+<pre id="annotation-box" class="annotation-box" style="display: none;">
+    "436": {
+        "license": "cc-by-sa",
+        "start": 1876.26,
+        "end": 1879.36,
+        "speech_classification": "Speech",
+        "text": "So thank you, John, for calling and offering that question.",
+        
+        "NUM_SPKS": 1,
+        "gender": "Female",
+        "age_gender": {
+            "Age": 31.5,
+            "Female": 0.9900000095367432,
+            "Male": 0.009999999776482582,
+            "Child": 0.0
+        },
+        "speakers": [
+            [
+                "SPEAKER_00"
+            ],
+            " 0.0  3.2 SPEAKER_00\n"
+        ],
+        "global speaker": {
+            "speaker label": "26",
+            "method": "mapping"
+        }
+
+        "SNR": 23.329906628579444,
+        "PESQ": 4.043514251708984,
+        "STOI": 0.9949520826339722,
+        "SI_SDR": 28.37453842163086,
+        "MOS": 4.020342826843262,
+        "ASR_CONF": 0.8318172115010677,
+        "DNSMOSPro": {
+            "BVCC": [
+                2.151841402053833,
+                0.4240565896034241
+            ],
+            "NISQA": [
+                4.024730682373047,
+                0.27187132835388184
+            ],
+            "VCC_2018": [
+                3.339622735977173,
+                0.43723881244659424
+            ]
+        },
+
+        "Arousal": 0.7490819692611694,
+        "Dominance": 0.7499462366104126,
+        "Valence": 0.8421176671981812,
+
+        "Neutral": 0.08471498638391495,
+        "Angry": 0.0006307809962891042,
+        "Sad": 0.008640062995254993,
+        "Happy": 0.9060142040252686,     
+    },
+</pre>
+</div>
+
+</div>
+
+<!-- JavaScript 让按钮切换 Annotation 可见性 -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 确保 JavaScript 在 DOM 加载完成后执行
+        document.getElementById("annotation-btn").addEventListener("click", function () {
+            var annotationBox = document.getElementById("annotation-box");
+            var button = document.getElementById("annotation-btn");
+
+            // 切换显示状态
+            if (annotationBox.style.display === "none" || annotationBox.style.display === "") {
+                annotationBox.style.display = "block";
+                button.textContent = "Hide Annotation";
+            } else {
+                annotationBox.style.display = "none";
+                button.textContent = "Show Annotation";
+            }
+        });
+    });
+</script>
+
+
+<!-- CSS 样式优化 -->
+<!-- CSS 让它们在一排对齐 -->
+<style>
+    h2#Examples {
+        margin-bottom: 30px; /* 增加 h2 和 audio-container 之间的间距 */
+    }
+
+    .audio-container {
+        display: flex;
+        align-items: center; /* 让所有元素在一排垂直居中 */
+        gap: 100px; /* 控件之间的间距 */
+        margin-top: 20px;
+        
+    }
+
+    .audio-title {
+        font-size: 20px;
+        white-space: nowrap; /* 防止换行 */
+    }
+
+    .audio-player {
+        width: 400px; /* 控制音频播放器宽度 */
+    }
+
+    .annotation-btn {
+        padding: 6px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .annotation-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+
+
+
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+    <h2 id="Dataset Preview" style="text-align: center;">
+		Dataset Preview
+	</h2>
+	
+
+
+    <div class="table-responsive pt-3">
+        <table class="table table-hover pt-2">
+           
+            <tbody>
+                <!-- Number of Speakers Block -->
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">Number of Speakers</th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">2</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td style="text-align: center; vertical-align: middle;">3</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td style="text-align: center; vertical-align: middle;">4</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+
+                <!-- Signal-to-Noise Ratio Block -->
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">Signal-to-Noise Ratio</th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Low</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td style="text-align: center; vertical-align: middle;">High</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <!-- Speech Quality Block -->
+                <!--tr>
+                    <th style="text-align: center; vertical-align: middle;">Speech Quality</th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Low</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td style="text-align: center; vertical-align: middle;">High</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr-->
+
+
+
+                <!-- Emotion Categories Block -->
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">Emotion Categories</th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Neutral</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+    
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Angry</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Happy</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Sad</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <!-- Number of Speakers Block -->
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">Emotion Attributes</th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"></td> 
+                    <td style="text-align: center; vertical-align: middle;">High</td> 
+                    <td style="text-align: center; vertical-align: middle;">Middle</td> 
+                    <td style="text-align: center; vertical-align: middle;">Low</td> 
+                </tr>
+                <tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Arousal</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Valence</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td rowspan="2" style="text-align: center; vertical-align: middle;">Dominance</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <!-- Sound Event Detection Block -->
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">Sound Events</th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Music</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+
+
+				<tr>
+                    <td style="text-align: center; vertical-align: middle;">Laughter</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Sign</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Throat Clearing</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Sirens</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Clapping</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Cat</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">Frog</td> 
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 280px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</div>
+
+
+
+This webpage's template is referenced from <a href="https://lifeiteng.github.io/valle/index.html">here</a>
+ 
+</article>
+</main>
+</div>
+
+</body>
+</html>

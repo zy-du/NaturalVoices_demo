@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<!-- <link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css"> -->
+	<link rel="stylesheet" href="../css/custom.css">
+	<link rel="stylesheet" href="../css/normalize.css">
+
+	<title></title>
+	<style>
+		* {
+			font-family: Verdana !important;
+		}
+	</style>
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h1 style="font-family: Verdana;"><b>Expressiveness, Emotion and in-the-wild Scenarios for Voice Conversion with NaturalVoices Dataset</b></h1>
+	<h5>Zongyang Du<sup>1,2</sup>, Shreeram Suresh Chandra<sup>1,2</sup>, Ali N. Salmanu<sup>1</sup>, <h5>Ismail Rasim Ulgen<sup>2</sup>, Carlos Busso<sup>3</sup>, Berrak Sisman<sup>2</sup></h5>
+	<h5><sup>1</sup>University of Texas at Dallas</h5>
+	<h5><sup>2</sup>Johns Hopkins University</h5>	
+	<h5><sup>3</sup>Carnegie Mellon University</h5>	
+		<h5 style="font-family: Verdana;"><a href="paper link">[Paper on ArXiv]</a>
+			
+		</h5>
+       
+	</div>
+	<p>
+        <h4 style="font-family: Verdana;"><b>Abstract</b> <br></h4>
+		Natural speech is spontaneous and expressive, encompassing various speaking styles and occurring in diverse environments with varying background noises. 
+		Voice conversion (VC) aims to transform one speaker's voice to sound like a target speaker while preserving linguistic content. 
+		However, most VC frameworks are trained on scripted corpora recorded in controlled settings, limiting their expressiveness to real-life speech. 
+		An ideal VC dataset should capture the richness, complexity, and expressiveness of natural human speech to meet the demands of novel VC tasks. 
+		To address this need, we introduced NaturalVoices, a large-scale dataset of spontaneous, expressive, and emotional speech sourced from in-the-wild podcast recordings, accompanied by an automatic annotation pipeline that provides detailed metadata. 
+		In this work, we present an enhanced version of NaturalVoices, now expanded to <b>3,950</b> hours with higher-quality, original sampling rate recordings, licensing information, and additional speech quality metrics. 
+		We perform extensive evaluations of VC models across diverse settings, particularly focusing on emotional and expressive speech, demonstrating the dataset’s versatility and potential for a wide range of VC and speech synthesis tasks. 
+		Our contributions provide a valuable resource for advancing VC research towards more natural and expressive synthetic speech.
+    </p>
+
+		<br>
+		<h6>Demo for Dataset:  <a href="Dataset demo">Here</a></h6>
+		
+		
+		<h6>Dataset Release: <a href="https://github.com/3loi/NaturalVoices">Here</a></h6>
+		
+		<br>
+
+
+</div>
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+    <h2 id="Samples for Scaling" style="text-align: center;">
+		Samples for Data Scaling Experiments
+	</h2>
+	<h3 style="text-align: center"> (NaturalVoices Dataset)</h3>
+	
+    <h5><b>Models</b>: TriaanVC[1], DDDMVC[2], ConsistencyVC[3]</h5>
+
+
+    <div class="table-responsive pt-3">
+        <table class="table table-hover pt-2">
+            <thead>
+                <tr>
+                    <th style="text-align: center; width: 100px;">Percentage</th> <!-- 额外的一列 -->
+                    <th style="text-align: center; width: 140px">Source Speech</th>
+                    <th style="text-align: center; width: 140px">TriaanVC</th>
+                    <th style="text-align: center; width: 140px">DDDMVC</th>
+                    <th style="text-align: center; width: 140px">ConsistencyVC</th>
+                    <th style="text-align: center; width: 140px">Target Speech</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 10% Block -->
+                <tr>
+                    <th rowspan="4" style="text-align: center; vertical-align: middle;">10%</th> 
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+
+                <!-- 50% Block -->
+                <tr>
+                    <th rowspan="4" style="text-align: center; vertical-align: middle;">50%</th> 
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+
+                <!-- 100% Block -->
+                <tr>
+                    <th rowspan="4" style="text-align: center; vertical-align: middle;">100%</th> 
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_2.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+    <h2 id="Samples for Scaling" style="text-align: center;">
+		Samples for Data Scaling Experiments
+	</h2>
+	<h3 style="text-align: center"> (Emotion Speech Dataset)</h3>
+	
+    <h5><b>Models</b>: TriaanVC[1], DDDMVC[2], ConsistencyVC[3]</h5>
+
+
+    <div class="table-responsive pt-3">
+        <table class="table table-hover pt-2">
+            <thead>
+                <tr>
+                    <th style="text-align: center; width: 100px;">Percentage</th> <!-- 额外的一列 -->
+                    <th style="text-align: center; width: 140px">Source Speech</th>
+                    <th style="text-align: center; width: 140px">TriaanVC</th>
+                    <th style="text-align: center; width: 140px">DDDMVC</th>
+                    <th style="text-align: center; width: 140px">ConsistencyVC</th>
+                    <th style="text-align: center; width: 140px">Target Speech</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 10% Block -->
+                <tr>
+                    <th rowspan="4" style="text-align: center; vertical-align: middle;">10%</th> 
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+
+                <!-- 50% Block -->
+                <tr>
+                    <th rowspan="4" style="text-align: center; vertical-align: middle;">50%</th> 
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_2.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_50_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_50_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+
+                <!-- 100% Block -->
+                <tr>
+                    <th rowspan="4" style="text-align: center; vertical-align: middle;">100%</th> 
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_1.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_2.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_2.wav" /></audio></td>
+                </tr>
+                <tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_100_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_100_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_6.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_4.wav" /></audio></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+	<h2 id="Samples for Emotion Conversion" style="text-align: center;">
+		Samples for Emotion Conversion</h2>
+	<h3 style="text-align: center"> (NaturalVoices Dataset)</h3>
+	<h5><b>Models</b>:DISSC[4]</h5>
+
+    <!-- Neutral to Happy -->
+    <h3 style="text-align: center; margin-top: 20px;">Neutral to Happy</h3>
+	<div class="table-responsive pt-3">
+        <table class="table table-hover pt-2">
+            <thead>
+                <tr>
+                    <th style="text-align: center; width: 140px;"></th>
+                    <th style="text-align: center; width: 140px;">Source</th>
+                    <th style="text-align: center; width: 140px;">DISSC</th>
+                    <th style="text-align: center; width: 140px;">Target</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Speaker 1 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 1</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+                <!-- Speaker 2 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 2</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+				<!-- Speaker 3 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 3</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+				<!-- Speaker 4 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 4</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+     <!-- Neutral to Sad -->
+	 <h3 style="text-align: center; margin-top: 20px;">Neutral to Sad</h3>
+	 <div class="table-responsive pt-3">
+		 <table class="table table-hover pt-2">
+			 <thead>
+				 <tr>
+					 <th style="text-align: center; width: 140px;"></th>
+					 <th style="text-align: center; width: 140px;">Source</th>
+					 <th style="text-align: center; width: 140px;">DISSC</th>
+					 <th style="text-align: center; width: 140px;">Target</th>
+				 </tr>
+			 </thead>
+			 <tbody>
+				 <!-- Speaker 1 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 1</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+				 <!-- Speaker 2 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 2</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+				 <!-- Speaker 3 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 3</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+				 <!-- Speaker 4 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 4</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+			 </tbody>
+		 </table>
+	 </div>
+	  <!-- Neutral to Angry -->
+	  <h3 style="text-align: center; margin-top: 20px;">Neutral to Angry</h3>
+	  <div class="table-responsive pt-3">
+		  <table class="table table-hover pt-2">
+			  <thead>
+				  <tr>
+					  <th style="text-align: center; width: 140px;"></th>
+					  <th style="text-align: center; width: 140px;">Source</th>
+					  <th style="text-align: center; width: 140px;">DISSC</th>
+					  <th style="text-align: center; width: 140px;">Target</th>
+				  </tr>
+			  </thead>
+			  <tbody>
+				  <!-- Speaker 1 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 1</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+				  <!-- Speaker 2 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 2</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+				  <!-- Speaker 3 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 3</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+				  <!-- Speaker 4 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 4</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+			  </tbody>
+		  </table>
+	  </div>
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+	<h2 id="Samples for Emotion Conversion" style="text-align: center;">
+		Samples for Emotion Conversion</h2>
+	<h3 style="text-align: center"> (Emotion Speech Dataset)</h3>
+	<h5><b>Models</b>:DISSC[4]</h5>
+
+    <!-- Neutral to Happy -->
+    <h3 style="text-align: center; margin-top: 20px;">Neutral to Happy</h3>
+	<div class="table-responsive pt-3">
+        <table class="table table-hover pt-2">
+            <thead>
+                <tr>
+                    <th style="text-align: center; width: 140px;"></th>
+                    <th style="text-align: center; width: 140px;">Source</th>
+                    <th style="text-align: center; width: 140px;">DISSC</th>
+                    <th style="text-align: center; width: 140px;">Target</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Speaker 1 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 1</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+                <!-- Speaker 2 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 2</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+				<!-- Speaker 3 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 3</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+				<!-- Speaker 4 Block -->
+                <tr>
+                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 4</th> 
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+                    <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+                </tr>
+				<tr>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+                    <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+     <!-- Neutral to Sad -->
+	 <h3 style="text-align: center; margin-top: 20px;">Neutral to Sad</h3>
+	 <div class="table-responsive pt-3">
+		 <table class="table table-hover pt-2">
+			 <thead>
+				 <tr>
+					 <th style="text-align: center; width: 140px;"></th>
+					 <th style="text-align: center; width: 140px;">Source</th>
+					 <th style="text-align: center; width: 140px;">DISSC</th>
+					 <th style="text-align: center; width: 140px;">Target</th>
+				 </tr>
+			 </thead>
+			 <tbody>
+				 <!-- Speaker 1 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 1</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+				 <!-- Speaker 2 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 2</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+				 <!-- Speaker 3 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 3</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+				 <!-- Speaker 4 Block -->
+				 <tr>
+					 <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 4</th> 
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					 <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				 </tr>
+				 <tr>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					 <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				 </tr>
+			 </tbody>
+		 </table>
+	 </div>
+	  <!-- Neutral to Angry -->
+	  <h3 style="text-align: center; margin-top: 20px;">Neutral to Angry</h3>
+	  <div class="table-responsive pt-3">
+		  <table class="table table-hover pt-2">
+			  <thead>
+				  <tr>
+					  <th style="text-align: center; width: 140px;"></th>
+					  <th style="text-align: center; width: 140px;">Source</th>
+					  <th style="text-align: center; width: 140px;">DISSC</th>
+					  <th style="text-align: center; width: 140px;">Target</th>
+				  </tr>
+			  </thead>
+			  <tbody>
+				  <!-- Speaker 1 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 1</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+				  <!-- Speaker 2 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 2</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+				  <!-- Speaker 3 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 3</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+				  <!-- Speaker 4 Block -->
+				  <tr>
+					  <th rowspan="2" style="text-align: center; vertical-align: middle;">Speaker 4</th> 
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/src_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_1.wav" /></audio></td>
+					  <td><audio controls style="width: 140px;"><source src="../demo_ablation/vc_10_2.wav" /></audio></td>
+				  </tr>
+				  <tr>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/src_10_3.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_4.wav" /></audio></td>
+					  <td><audio controls style="width: 170px;"><source src="../demo_ablation/vc_10_5.wav" /></audio></td>
+				  </tr>
+			  </tbody>
+		  </table>
+	  </div>
+</div>
+
+
+
+This webpage's template is referenced from <a href="https://lifeiteng.github.io/valle/index.html">here</a>
+ 
+</article>
+</main>
+</div>
+
+</body>
+</html>
